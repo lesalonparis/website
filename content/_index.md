@@ -10,7 +10,7 @@ header_logo: "images/chef-hat.png"
 #
 # Headers are safeHTML, you can use HTML tags such as b,i,u,br
 header_headline: "Le Salon"
-header_subheadline: "<b>Nutrition</b> Coach & <b>Chef</b> Consultant"
+header_subheadline: "Pour les <strong>amoureux</strong> du quartier"
 
 # Add a 'Go back to top' item to the navigation menu
 # Title: name of navigation menu entry
