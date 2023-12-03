@@ -1,3 +1,7 @@
+{{ $stylesheetCarousel := resources.Get "css/carousel.css" }}
+{{ $stylesheet := slice $stylesheetCarousel | resources.Concat "css/carousel.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $stylesheetCarousel.Permalink }}" type="text/css" integrity="{{ $stylesheetCarousel.Data.Integrity }}" />
+
 <style>
  :root {
    /* === Cover / Landing area === */

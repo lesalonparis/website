@@ -1,0 +1,3 @@
+{{ $scriptCarousel := resources.Get "js/carousel.js" }}
+{{ $js := slice $scriptCarousel | resources.Concat "js/carousel.js" | resources.Minify | resources.Fingerprint }}
+<script src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}" ></script>
