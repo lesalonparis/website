@@ -1,13 +1,8 @@
-<form action="mailto:your-email@example.com" method="post" enctype="application/x-www-form-urlencoded">
+<form action="mailto:your-email@example.com" method="get" onSubmit="window.location.href=(this.action + '?subject=' + encodeURIComponent(this.subject.value) + '&body=' + encodeURIComponent(this.body.value)); return false;">
+  <input hidden type="text" id="subject" name="subject" value="Jai des questions pour Pilou"/>
 
-<label for="subject" hidden></label>
-  <input hidden type="text" name="subject" value="Jai des questions pour Pilou"/>
-  
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-<br/>
   <label for="body">Message:</label>
-  <textarea name="body" rows="4" required></textarea>
-<br/>
+  <textarea name="body" id="body" rows="4" required></textarea>
+
   <input type="submit" value="Submit">
 </form>
