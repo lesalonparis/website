@@ -1,8 +1,20 @@
-<form action="mailto:your-email@example.com" method="get" onSubmit="window.location.href=(this.action + '?subject=' + encodeURIComponent(this.subject.value) + '&body=' + encodeURIComponent(this.body.value))">
-  <input hidden type="text" id="subject" name="subject" value="Jai des questions pour Pilou"/>
+<form action="mailto:your-email@example.com" method="get" id="contactForm">
+  <input hidden type="text" id="subject" name="subject" value="J'ai des questions pour Pilou"/>
 
   <label for="body">Message:</label>
   <textarea name="body" id="body" rows="4" required></textarea>
 
   <input type="submit" value="Submit">
 </form>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const subject = form.subject.value;
+    const body = form.body.value;
+    const action = form.action;
+
+    window.location.href = action + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);;
+  })
+</script>
