@@ -5,5 +5,3 @@ header_menu: true
 ---
 
 {{< contact-form >}}
-
-{{< map >}}
