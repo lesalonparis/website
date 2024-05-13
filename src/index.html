@@ -380,7 +380,12 @@
               >
                 ADDRESSE
               </h2>
-              <p class="mt-1">151 Rue Montmartre 75002 Paris France</p>
+              <a
+                href="geo:124.028582,-29.201930"
+                id="maps-link"
+                class="text-teal-600 mt-1"
+                >151 Rue Montmartre 75002 Paris France</a
+              >
             </div>
             <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
               <h2
@@ -390,7 +395,7 @@
               </h2>
               <a
                 href="mailto:lesalonparis2@gmail.com"
-                class="text-teal-800 leading-relaxed"
+                class="text-teal-600 leading-relaxed"
                 >lesalonparis2@gmail.com</a
               >
               <h2
@@ -465,22 +470,44 @@
       </p>
     </footer>
     <script>
-      document
-        .getElementById("contact-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const form = e.target;
-          const subject = `${form.object.value} - ${form.name.value}`;
-          const body = form.message.value;
-          const action = form.action;
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("contact-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const subject = `${form.object.value} - ${form.name.value}`;
+            const body = form.message.value;
+            const action = form.action;
 
-          window.location.href =
-            action +
-            "?subject=" +
-            encodeURIComponent(subject) +
-            "&body=" +
-            encodeURIComponent(body);
-        });
+            window.location.href =
+              action +
+              "?subject=" +
+              encodeURIComponent(subject) +
+              "&body=" +
+              encodeURIComponent(body);
+          });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var mapsLink = document.getElementById("maps-link");
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        var latitude = 48.87049;
+        var longitude = 2.34254;
+
+        if (/android/i.test(userAgent)) {
+          mapsLink.href = `geo:${latitude},${longitude}`;
+        } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          mapsLink.href = `maps://maps.apple.com/?q=${latitude},${longitude}`;
+        } else {
+          mapsLink.href = `https://www.google.com/maps?q=${latitude},${longitude}`;
+          mapsLink.target = "_blank";
+          mapsLink.rel = "noopener noreferrer";
+        }
+      });
     </script>
   </body>
 </html>
