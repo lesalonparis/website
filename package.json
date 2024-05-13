@@ -1,0 +1,16 @@
+{
+  "name": "website",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
+    "copy:assets": "copyfiles -u 1 'src/assets/**/*' dist",
+    "copy:html": "copyfiles -u 1 src/index.html dist",
+    "build": "npm run build:css && npm run copy:assets && npm run copy:html",
+    "start": "http-server dist"
+  },
+  "devDependencies": {
+    "caniuse-lite": "^1.0.30001616",
+    "copyfiles": "^2.4.1",
+    "http-server": "^14.1.1",
+    "tailwindcss": "^3.4.3"
+  }
+}

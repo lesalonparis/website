@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Salon</title>
+    <link href="/styles.css" rel="stylesheet" />
+    <script src="https://unpkg.com/alpinejs" defer></script>
+  </head>
+
+  <body>
+    <header id="home">
+      <div>
+        <div class="bg-teal-600 h-150">
+          <img
+            height="500"
+            width="500"
+            src="/assets/images/logo-salon.png"
+            alt="Background Image"
+            class="mx-auto invert"
+          />
+        </div>
+        <div class="origin-center rotate-180">
+          <svg
+            viewBox="0 0 1440 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
+              class="fill-current text-teal-600"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="container mx-auto">
+        <p class="w-1/2 italic font-semibold mx-auto text-center">
+          A proximité des Grands Boulevards le Salon est un petit bar sympa ,un
+          petit bar de quartier qui nous offre une pause bien mérité en fin de
+          journée. Il est situé a l’entrée de la galerie Montmartre qui est dans
+          le prolongement du passage des Panoramas. De ce fait il se paie le
+          luxe d’avoir deux terrasses dont une à l’abri dans la galerie.
+        </p>
+      </div>
+    </section>
+
+    <section id="galery" class="text-gray-600 body-font relative mt-8">
+      <div class="container mx-auto mt-10">
+        <h1
+          class="text-center capitalize text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl p-6 text-transparent bg-clip-text bg-gradient-to-tr to-teal-500 from-teal-600"
+        >
+          Galerie
+        </h1>
+      </div>
+      <div class="container px-5 py-12 mx-auto flex sm:flex-nowrap flex-wrap">
+        <div
+          x-data="{
+        imageGalleryOpened: false,
+        imageGalleryActiveUrl: null,
+        imageGalleryImageIndex: null,
+        imageGalleryOpen(event) {
+            this.imageGalleryImageIndex = event.target.dataset.index;
+            this.imageGalleryActiveUrl = event.target.src;
+            this.imageGalleryOpened = true;
+        },
+        imageGalleryClose() {
+            this.imageGalleryOpened = false;
+            setTimeout(() => this.imageGalleryActiveUrl = null, 300);
+        },
+        imageGalleryNext(){
+            if(this.imageGalleryImageIndex == this.$refs.gallery.childElementCount){
+                this.imageGalleryImageIndex = 1;
+            } else {
+                this.imageGalleryImageIndex = parseInt(this.imageGalleryImageIndex) + 1;
+            }
+            this.imageGalleryActiveUrl = this.$refs.gallery.querySelector('[data-index=\'' + this.imageGalleryImageIndex + '\']').src;
+        },
+        imageGalleryPrev() {
+            if(this.imageGalleryImageIndex == 1){
+                this.imageGalleryImageIndex = this.$refs.gallery.childElementCount;
+            } else {
+                this.imageGalleryImageIndex = parseInt(this.imageGalleryImageIndex) - 1;
+            }
+
+            this.imageGalleryActiveUrl = this.$refs.gallery.querySelector('[data-index=\'' + this.imageGalleryImageIndex + '\']').src;
+            
+        }
+    }"
+          @image-gallery-next.window="imageGalleryNext()"
+          @image-gallery-prev.window="imageGalleryPrev()"
+          @keyup.right.window="imageGalleryNext();"
+          @keyup.left.window="imageGalleryPrev();"
+          x-init="
+        imageGalleryPhotos = $refs.gallery.querySelectorAll('img');
+        for(let i=0; i<imageGalleryPhotos.length; i++){
+            imageGalleryPhotos[i].setAttribute('data-index', i+1);
+        }
+    "
+          class="w-full h-full select-none"
+        >
+          <div
+            class="mx-auto duration-1000 delay-300 opacity-0 select-none ease animate-fade-in-view"
+            style="
+              translate: none;
+              rotate: none;
+              scale: none;
+              opacity: 1;
+              transform: translate(0px, 0px);
+            "
+          >
+            <ul
+              x-ref="gallery"
+              id="gallery"
+              class="grid grid-cols-2 gap-5 lg:grid-cols-5"
+            >
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/01.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 01"
+                />
+              </li>
+
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/02.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 07"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/03.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 08"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/04.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 09"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/05.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 10"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/06.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 06"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/07.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 07"
+                />
+              </li>
+
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/08.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 08"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/09.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 09"
+                />
+              </li>
+              <li>
+                <img
+                  x-on:click="imageGalleryOpen"
+                  src="/assets/images/gallery/10.jpg"
+                  class="object-cover select-none w-full h-auto bg-gray-200 rounded cursor-zoom-in aspect-[5/6] lg:aspect-[2/3] xl:aspect-[3/4]"
+                  alt="photo gallery image 10"
+                />
+              </li>
+            </ul>
+          </div>
+          <template x-teleport="body">
+            <div
+              x-show="imageGalleryOpened"
+              x-transition:enter="transition ease-in-out duration-300"
+              x-transition:enter-start="opacity-0"
+              x-transition:leave="transition ease-in-in duration-300"
+              x-transition:leave-end="opacity-0"
+              @click="imageGalleryClose"
+              @keydown.window.escape="imageGalleryClose"
+              x-trap.inert.noscroll="imageGalleryOpened"
+              class="fixed inset-0 z-[99] flex items-center justify-center bg-black bg-opacity-50 select-none cursor-zoom-out"
+              x-cloak
+            >
+              <div
+                class="relative flex items-center justify-center w-11/12 xl:w-4/5 h-11/12"
+              >
+                <div
+                  @click="$event.stopPropagation(); $dispatch('image-gallery-prev')"
+                  class="absolute left-0 flex items-center justify-center text-white translate-x-10 rounded-full cursor-pointer xl:-translate-x-24 2xl:-translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </div>
+                <img
+                  x-show="imageGalleryOpened"
+                  x-transition:enter="transition ease-in-out duration-300"
+                  x-transition:enter-start="opacity-0 transform scale-50"
+                  x-transition:leave="transition ease-in-in duration-300"
+                  x-transition:leave-end="opacity-0 transform scale-50"
+                  class="object-contain object-center w-full h-full select-none cursor-zoom-out"
+                  :src="imageGalleryActiveUrl"
+                  alt=""
+                  style="display: none"
+                />
+                <div
+                  @click="$event.stopPropagation(); $dispatch('image-gallery-next');"
+                  class="absolute right-0 flex items-center justify-center text-white -translate-x-10 rounded-full cursor-pointer xl:translate-x-24 2xl:translate-x-32 bg-white/10 w-14 h-14 hover:bg-white/20"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="text-gray-600 body-font relative mt-8">
+      <div class="container mx-auto">
+        <h1
+          class="text-center capitalize text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl p-6 text-transparent bg-clip-text bg-gradient-to-tr to-teal-500 from-teal-600"
+        >
+          Réservation
+        </h1>
+      </div>
+
+      <div class="container mx-auto w-1/2">
+        <p class="italic font-semibold mx-auto text-center">
+          N'hésitez pas à nous contacter par mail, nous nous efforcerons de vous
+          répondre dans les meilleurs délais!
+        </p>
+      </div>
+
+      <div class="relative items-center w-full py-12 mx-auto container">
+        <div class="grid w-full grid-cols-1 gap-6 mx-auto lg:grid-cols-2">
+          <form
+            id="contact-form"
+            action="mailto:lesalonparis2@gmail.com"
+            method="get"
+            class="p-6"
+          >
+            <p class="leading-relaxed mb-5 text-gray-600">
+              Rejoignez-nous ce soir pour un événement!
+            </p>
+            <div class="relative mb-4">
+              <label for="name" class="leading-7 text-sm text-gray-600"
+                >Nom</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full bg-white rounded border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+            <div class="relative mb-4">
+              <label for="email" class="leading-7 text-sm text-gray-600"
+                >Objet</label
+              >
+              <input
+                type="text"
+                id="object"
+                name="object"
+                required
+                class="w-full bg-white rounded border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+            <div class="relative mb-4">
+              <label for="message" class="leading-7 text-sm text-gray-600"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                required
+                class="w-full bg-white rounded border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+              ></textarea>
+            </div>
+            <button
+              class="text-white bg-teal-500 border-0 py-2 px-6 focus:outline-none hover:bg-teal-600 rounded text-lg"
+            >
+              Nous contacter
+            </button>
+          </form>
+          <div class="p-6">
+            <img class="rounded object-cover" src="/assets/images/bar.jpg" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="informations" class="text-gray-600 body-font relative">
+      <div class="container mx-auto mt-10">
+        <h1
+          class="text-center capitalize text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl p-6 text-transparent bg-clip-text bg-gradient-to-tr to-teal-500 from-teal-600"
+        >
+          Informations
+        </h1>
+      </div>
+      <div class="container px-5 py-12 mx-auto flex sm:flex-nowrap flex-wrap">
+        <div
+          class="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative"
+        >
+          <iframe
+            width="100%"
+            height="100%"
+            class="absolute inset-0"
+            frameborder="0"
+            title="map"
+            marginheight="0"
+            marginwidth="0"
+            scrolling="no"
+            src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4Paris+(Le%20Salon%20)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
+            style="filter: grayscale(1) contrast(1.2) opacity(0.4)"
+          ></iframe>
+          <div class="bg-white relative flex flex-wrap py-6 rounded shadow-md">
+            <div class="lg:w-1/2 px-6">
+              <h2
+                class="title-font font-semibold text-gray-900 tracking-widest text-xs"
+              >
+                ADDRESSE
+              </h2>
+              <p class="mt-1">151 Rue Montmartre 75002 Paris France</p>
+            </div>
+            <div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
+              <h2
+                class="title-font font-semibold text-gray-900 tracking-widest text-xs"
+              >
+                EMAIL
+              </h2>
+              <a
+                href="mailto:lesalonparis2@gmail.com"
+                class="text-teal-500 leading-relaxed"
+                >lesalonparis2@gmail.com</a
+              >
+              <h2
+                class="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4"
+              >
+                PHONE
+              </h2>
+              <a href="tel:0142333333" class="leading-relaxed"
+                >01 42 33 33 33</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="lg:w-1/3 md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0"
+        >
+          <table class="w-1/2 mx-auto divide-y divide-gray-200">
+            <tbody class="bg-white divide-y divide-gray-200 table-fixed">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Lundi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">Fermé</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Mardi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">17h30 - 2h00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Mercredi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">17h30 - 2h00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Jeudi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">17h30 - 2h00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Vendredi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">17h30 - 2h00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Samedi</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">17h30 - 2h00</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap"><b>Dimanche</b></td>
+                <td class="px-6 py-4 whitespace-nowrap">Fermé</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="flex flex-col space-y-10 justify-center m-10">
+      <nav
+        class="flex justify-center flex-wrap gap-6 text-gray-500 font-medium"
+      >
+        <a class="hover:text-gray-900" href="#home">Accueil</a>
+        <a
+          class="hover:text-gray-900"
+          href="/assets/pdf/carte.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Carte</a
+        >
+        <a class="hover:text-gray-900" href="#galery">Galerie</a>
+        <a class="hover:text-gray-900" href="#booking">Réservation</a>
+        <a class="hover:text-gray-900" href="#informations">Informations</a>
+      </nav>
+
+      <div class="flex justify-center space-x-5">
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="https://img.icons8.com/fluent/30/000000/facebook-new.png" />
+        </a>
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://img.icons8.com/fluent/30/000000/instagram-new.png"
+          />
+        </a>
+        <a
+          href="https://messenger.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src="https://img.icons8.com/fluent/30/000000/facebook-messenger--v2.png"
+          />
+        </a>
+      </div>
+      <p class="text-center text-gray-700 font-medium">
+        &copy; 2024 Le Salon SAS. Tous droits réservés.
+      </p>
+    </footer>
+    <script>
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const form = e.target;
+          const subject = `${form.object.value} - ${form.name.value}`;
+          const body = form.message.value;
+          const action = form.action;
+
+          window.location.href =
+            action +
+            "?subject=" +
+            encodeURIComponent(subject) +
+            "&body=" +
+            encodeURIComponent(body);
+        });
+    </script>
+  </body>
+</html>
