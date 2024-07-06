@@ -8,7 +8,9 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
   </head>
 
-  <body style="background-image: url('/assets/images/background.png')">
+  <body
+    style="background-image: url(&quot;/assets/images/background.png&quot;)"
+  >
     <header id="home">
       <div>
         <div>
@@ -300,13 +302,13 @@
               />
             </div>
             <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-600"
-                >Objet</label
-              >
+              <label for="email" class="leading-7 text-sm text-gray-600">
+                Téléphone
+              </label>
               <input
-                type="text"
+                type="tel"
                 id="object"
-                name="object"
+                name="phone"
                 required
                 class="w-full bg-white rounded border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -464,8 +466,8 @@
           .addEventListener("submit", function (e) {
             e.preventDefault();
             const form = e.target;
-            const subject = `${form.object.value} - ${form.name.value}`;
-            const body = form.message.value;
+            const subject = `Demande d'informations - ${form.name.value}`;
+            const body = `${form.message.value}\nTéléphone: ${form.phone.value}`;
             const action = form.action;
 
             window.location.href =
