@@ -3,7 +3,12 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
 
   theme: {
-    extend: {},
+      extend: {
+	  fontFamily: {
+	      bodoni: ['"Bodoni Moda SC"'],
+	      raleway: ['"Raleway"']
+	  }
+      },
   },
 
   plugins: [],
