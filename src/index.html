@@ -27,7 +27,7 @@
     </header>
 
     <section>
-      <div class="container mx-auto">
+      <div class="container mx-auto mt-10">
         <p class="w-1/2 italic font-semibold mx-auto text-center">
           A proximité des Grands Boulevards le Salon est un petit bar sympa de
           quartier qui nous offre une pause bien méritée en fin de journée. Il
@@ -35,6 +35,417 @@
           passage des Panoramas. De ce fait il se paie le luxe d’avoir deux
           terrasses dont une à l’abri dans la galerie.
         </p>
+      </div>
+      <div
+        class="w-full mx-auto max-w-xl flex flex-col justify-center relative"
+      >
+        <div class="mt-10 max-w-xl mx-auto">
+          <div
+            class="flex flex-col w-full"
+            x-data="{
+        skip: 1,
+        atBeginning: false,
+        atEnd: false,
+        next() {
+            this.to((current, offset) => current + (offset * this.skip))
+        },
+        prev() {
+            this.to((current, offset) => current - (offset * this.skip))
+        },
+        to(strategy) {
+            let slider = this.$refs.slider
+            let current = slider.scrollLeft
+            let offset = slider.firstElementChild.getBoundingClientRect().width
+            slider.scrollTo({ left: strategy(current, offset), behavior: 'smooth' })
+        },
+        focusableWhenVisible: {
+            'x-intersect:enter'() {
+                this.$el.removeAttribute('tabindex')
+            },
+            'x-intersect:leave'() {
+                this.$el.setAttribute('tabindex', '-1')
+            },
+        },
+        disableNextAndPreviousButtons: {
+            'x-intersect:enter.threshold.05'() {
+                let slideEls = this.$el.parentElement.children
+                // If this is the first slide.
+                if (slideEls[0] === this.$el) {
+                    this.atBeginning = true
+                // If this is the last slide.
+                } else if (slideEls[slideEls.length-1] === this.$el) {
+                    this.atEnd = true
+                }
+            },
+            'x-intersect:leave.threshold.05'() {
+                let slideEls = this.$el.parentElement.children
+                // If this is the first slide.
+                if (slideEls[0] === this.$el) {
+                    this.atBeginning = false
+                // If this is the last slide.
+                } else if (slideEls[slideEls.length-1] === this.$el) {
+                    this.atEnd = false
+                }
+            },
+        },
+    }"
+          >
+            <div
+              class="flex flex-col w-full"
+              aria-labelledby="carousel-label"
+              role="region"
+              tabindex="0"
+              x-on:keydown.left="prev"
+              x-on:keydown.right="next"
+            >
+              <h2 class="sr-only" hidden="" id="carousel-label">Carousel</h2>
+              <span class="sr-only" hidden="" id="carousel-content-label"
+                >Carousel</span
+              >
+              <div class="items-center inline-flex lg:px-2 space-x-2">
+                <button
+                  class="bg-orange-500 hover:bg-orange-600 size-8 flex focus:bg-orange-400 rounded-full items-center text-white opacity-50"
+                  :class="{ 'opacity-50 ': atBeginning }"
+                  :aria-disabled="atBeginning"
+                  :tabindex="atEnd ? -1 : 0"
+                  x-on:click="prev"
+                  tabindex="0"
+                  aria-disabled="true"
+                >
+                  <span aria-hidden="true" class="mx-auto"> ← </span
+                  ><span class="sr-only">Skip to previous slide page</span>
+                </button>
+                <button
+                  class="bg-orange-500 hover:bg-orange-600 size-8 flex focus:bg-orange-400 rounded-full items-center text-white"
+                  :class="{ 'opacity-50 ': atEnd }"
+                  :aria-disabled="atEnd"
+                  :tabindex="atEnd ? -1 : 0"
+                  x-on:click="next"
+                  tabindex="0"
+                >
+                  <span aria-hidden="true" class="mx-auto"> → </span
+                  ><span class="sr-only">Skip to next slide page</span>
+                </button>
+              </div>
+              <ul
+                class="flex gap-3 overflow-x-scroll mt-4 scrollbar-hide snap-mandatory snap-x w-full rounded-2xl"
+                role="listbox"
+                aria-labelledby="carousel-content-label"
+                tabindex="0"
+                x-ref="slider"
+              >
+                <li
+                  class="items-center justify-center w-full flex flex-col shrink-0 snap-start h-full p-8 rounded-2xl lg:p-10 bg-gray-100"
+                  role="option"
+                  x-bind="disableNextAndPreviousButtons"
+                >
+                  <figure>
+                    <div class="max-w-2xl">
+                      <div class="flex flex-col gap-12">
+                        <p
+                          class="text-base text-gray-900 font-display text-balance"
+                        >
+                          "Un des meilleurs bar de Paris! Ambiance conviviale,
+                          boisson rapport qualité/prix au top, service
+                          irréprochable, réactif et agréable. Je tiens à
+                          remercier Raphaël pour son service d’une extrême
+                          justesse et d’une rare qualité."
+                        </p>
+                        <div class="block flex-shrink-0">
+                          <div class="flex items-center">
+                            <div>
+                              <img
+                                class="inline-block h-9 w-9 rounded-full object-cover object-center"
+                                src="https://lh3.googleusercontent.com/a/ACg8ocKBaYpsu4Q3ypQm3Jdy0Cu3JwaS90gvFGGjQ_7b7vfjE_DAXw=s64-c-rp-mo-br100"
+                                alt=""
+                              />
+                            </div>
+                            <div class="ml-3">
+                              <p class="text-sm font-medium text-gray-700">
+                                Louise Le Bodic
+                              </p>
+                              <div class="flex gap-0.5">
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </figure>
+                </li>
+                <li
+                  class="items-center justify-center w-full flex flex-col shrink-0 snap-start h-full p-8 rounded-2xl lg:p-10 bg-gray-100"
+                  role="option"
+                  x-bind="disableNextAndPreviousButtons"
+                >
+                  <figure>
+                    <div class="max-w-2xl">
+                      <div class="flex flex-col gap-12">
+                        <p
+                          class="text-base text-gray-900 font-display text-balance"
+                        >
+                          "Une équipe toujours au top ! Toujours à l’écoute de
+                          sa clientèle ! Merci pour votre travail et votre
+                          courtoisie !"
+                        </p>
+                        <div class="block flex-shrink-0">
+                          <div class="flex items-center">
+                            <div>
+                              <img
+                                class="inline-block h-9 w-9 rounded-full object-cover object-center"
+                                src="https://lh3.googleusercontent.com/a-/ALV-UjXO4YgmHm9TjOwDnEfrfrj26-w51G1xLtPKiYuc1SzZbJFyaO81=s64-c-rp-mo-br100"
+                                alt=""
+                              />
+                            </div>
+                            <div class="ml-3">
+                              <p class="text-sm font-medium text-gray-700">
+                                Alexandre Guieau
+                              </p>
+                              <div class="flex gap-0.5">
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </figure>
+                </li>
+                <li
+                  class="items-center justify-center w-full flex flex-col shrink-0 snap-start h-full p-8 rounded-2xl lg:p-10 bg-gray-100"
+                  role="option"
+                  x-bind="disableNextAndPreviousButtons"
+                >
+                  <figure>
+                    <div class="max-w-2xl">
+                      <div class="flex flex-col gap-12">
+                        <p
+                          class="text-base text-gray-900 font-display text-balance"
+                        >
+                          "Un service toujours accueillant, des prix
+                          raisonnables pour le quartier, en somme un grand oui"
+                        </p>
+                        <div class="block flex-shrink-0">
+                          <div class="flex items-center">
+                            <div>
+                              <img
+                                class="inline-block h-9 w-9 rounded-full object-cover object-center"
+                                src="https://lh3.googleusercontent.com/a/ACg8ocKSQk1BdecnuQ1B21gzWpV2aFVdF5TTMBYlJ7SgErAliGxTFgrl=s64-c-rp-mo-ba3-br100"
+                                alt=""
+                              />
+                            </div>
+                            <div class="ml-3">
+                              <p class="text-sm font-medium text-gray-700">
+                                Baptiste Richardet (Lympes)
+                              </p>
+                              <div class="flex gap-0.5">
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </figure>
+                </li>
+                <li
+                  class="items-center justify-center w-full flex flex-col shrink-0 snap-start h-full p-8 rounded-2xl lg:p-10 bg-gray-100"
+                  role="option"
+                  x-bind="disableNextAndPreviousButtons"
+                >
+                  <figure>
+                    <div class="max-w-2xl">
+                      <div class="flex flex-col gap-12">
+                        <p
+                          class="text-base text-gray-900 font-display text-balance"
+                        >
+                          "Incroyable Waow jodie est la meilleure serveuse au
+                          monde c’est incroyable je suis sous le choc"
+                        </p>
+                        <div class="block flex-shrink-0">
+                          <div class="flex items-center">
+                            <div>
+                              <img
+                                class="inline-block h-9 w-9 rounded-full object-cover object-center"
+                                src="https://lh3.googleusercontent.com/a-/ALV-UjVoLW9DWECKnKe47QrHpXcvvjHWk-Q8WpB7zxjjQ6lUHuRvgY0=s64-c-rp-mo-br100"
+                                alt=""
+                              />
+                            </div>
+                            <div class="ml-3">
+                              <p class="text-sm font-medium text-gray-700">
+                                Adam Martres
+                              </p>
+                              <div class="flex gap-0.5">
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                                <svg
+                                  class="h-4 w-4 shrink-0 fill-amber-400"
+                                  viewBox="0 0 256 256"
+                                >
+                                  <path
+                                    d="M239.2 97.4A16.4 16.4.0 00224.6 86l-59.4-4.1-22-55.5A16.4 16.4.0 00128 16h0a16.4 16.4.0 00-15.2 10.4L90.4 82.2 31.4 86A16.5 16.5.0 0016.8 97.4 16.8 16.8.0 0022 115.5l45.4 38.4L53.9 207a18.5 18.5.0 007 19.6 18 18 0 0020.1.6l46.9-29.7h.2l50.5 31.9a16.1 16.1.0 008.7 2.6 16.5 16.5.0 0015.8-20.8l-14.3-58.1L234 115.5A16.8 16.8.0 00239.2 97.4z"
+                                  ></path>
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
