@@ -28,7 +28,9 @@
 
     <section>
       <div class="container mx-auto mt-10">
-        <p class="w-full px-8 italic font-semibold mx-auto text-center">
+        <p
+          class="sm:w-1/2 w-full px-8 italic font-semibold mx-auto text-center"
+        >
           A proximité des Grands Boulevards le Salon est un petit bar sympa de
           quartier qui nous offre une pause bien méritée en fin de journée. Il
           est situé à l’entrée de la galerie Montmartre dans le prolongement du
@@ -40,7 +42,7 @@
         <div
           class="w-full mx-auto max-w-xl flex flex-col justify-center relative"
         >
-          <div class="max-w-xl mx-auto">
+          <div class="sm:max-w-xl max-w-xs mx-auto">
             <div
               class="flex flex-col w-full"
               x-data="{
@@ -100,7 +102,7 @@
                 x-on:keydown.right="next"
               >
                 <ul
-                  class="flex gap-3 overflow-hidden mt-4 scrollbar-hide snap-mandatory snap-x w-full rounded-2xl"
+                  class="flex gap-3 overflow-hidden mt-4 scrollbar-hide snap-mandatory snap-x w-full sm:w-350 rounded-2xl"
                   role="listbox"
                   aria-labelledby="carousel-content-label"
                   tabindex="0"
